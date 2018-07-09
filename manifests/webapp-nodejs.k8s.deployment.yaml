@@ -1,0 +1,63 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nodejs-webapp
+  namespace: demo
+  labels:
+    app: nodejs-webapp
+spec:
+  selector:
+    matchLabels:
+      app: nodejs-webapp
+  template:
+    metadata:
+      labels:
+        app: nodejs-webapp
+    spec:
+      containers:
+        - name: web
+          image: gcr.io/sap-hybris-sf-playground/cloudnext18/webapp:0dcb1cf8e7a739e7acbe2cb7f529a95d80d878b1
+          ports:
+            - containerPort: 8080
+          env: 
+            - name: APP_PORT
+              value: "8080" 
+            - name: DB_HOST
+              value: "localhost"            
+            - name: DB_PORT
+              value: "3306"                  
+            - name: DB_USER
+              value: "root"
+            - name: DB_PASSWORD
+              value: ""
+            - name: DB_SCHEMA
+              value: "cloudnext18"
+            - name: DB_DIALECT
+              value: "mysql"
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          env:
+            - name: CONNECTION_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: demo-mysql-credentials
+                  key: connectionName
+          command: ["/cloud_sql_proxy",
+                    "-instances=$(CONNECTION_NAME)=tcp:3306",
+                    "-credential_file=/secrets/cloudsql/privateKeyData"]
+          volumeMounts:
+            - name: demo-service-account
+              mountPath: /secrets/cloudsql
+              readOnly: true
+      volumes:
+        - name: demo-service-account
+          secret:
+            secretName: demo-service-account
+        - name: cloudsql
+          emptyDir:
+        volumes:
+          - name: demo-service-account
+            secret:
+              secretName: demo-service-account
+          - name: cloudsql
+            emptyDir:          

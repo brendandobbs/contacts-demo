@@ -1,0 +1,23 @@
+{
+    "name": "server",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "version": "0.1.0",
+    "dependencies": {
+        "express": "^4.16.3",
+        "express-graphql": "^0.6.12",
+        "faker": "^4.1.0",
+        "graphiql": "^0.11.11",
+        "graphql": "^0.13.2",
+        "graphql-relay": "^0.5.5",
+        "graphql-sequelize": "^8.3.1",
+        "graphql-tag": "^2.9.2",
+        "lodash": "^4.17.10",
+        "lowdash": "^1.2.0",
+        "mysql2": "^1.5.3",
+        "sequelize": "^4.38.0"
+    },
+    "private": true
+}
