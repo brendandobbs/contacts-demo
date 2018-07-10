@@ -6,8 +6,8 @@ WORKDIR /usr/src/cloudnext18
 # Bundle app source
 COPY . .
 
-RUN npm install
+RUN ./prepare.sh
 # If you are building your code for production
 
 EXPOSE 8080
-CMD [ "npm", "start" ]
+CMD run.sh
