@@ -1,0 +1,26 @@
+apiVersion: settings.k8s.io/v1alpha1
+kind: PodPreset
+metadata:
+  name: cloud-mysql
+spec:
+  selector:
+    matchLabels:
+      serving.knative.dev/configuration: contacts
+  env:
+    - name: SQL_PROXY_ENABLED
+      value: "true"  
+    - name: SQL_PROXY_privateKeyData
+      valueFrom:
+        secretKeyRef:
+          name: gcp-mysql
+          key: privateKeyData
+    - name: SQL_PROXY_connectionName
+      valueFrom:
+        secretKeyRef:
+          name: gcp-mysql
+          key: connectionName
+    - name: SQL_PROXY_serviceAccount
+      valueFrom:
+        secretKeyRef:
+          name: gcp-mysql
+          key: serviceAccount              

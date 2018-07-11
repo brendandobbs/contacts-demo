@@ -10,4 +10,4 @@ RUN ./prepare.sh
 # If you are building your code for production
 
 EXPOSE 8080
-CMD run.sh
+CMD ./run.sh
