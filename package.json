@@ -18,6 +18,7 @@
         "lodash": "^4.17.10",
         "lowdash": "^1.2.0",
         "mysql2": "^1.5.3",
+        "request": "^2.87.0",
         "sequelize": "^4.38.0"
     },
     "private": true
